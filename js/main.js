@@ -47,16 +47,16 @@
     });
 
     /*------------------
-		Navigation
-	--------------------*/
+        Navigation
+    --------------------*/
     $(".mobile-menu").slicknav({
         prependTo: '#mobile-menu-wrap',
         allowParentLinks: true
     });
 
     /*------------------
-		Hero Slider
-	--------------------*/
+        Hero Slider
+    --------------------*/
     $('.hero__slider').owlCarousel({
         loop: true,
         dots: true,
@@ -168,15 +168,25 @@
         Counter
     --------------------*/
     $('.counter_num').each(function () {
-        $(this).prop('Counter', 0).animate({
-            Counter: $(this).text()
-        }, {
+        var $this = $(this);
+        var fullText = $this.text();
+
+        var numberMatch = fullText.match(/[\d,.]+/); 
+        if (!numberMatch) return;
+
+        var number = parseFloat(numberMatch[0].replace(/,/g, ''));
+        var prefix = fullText.substring(0, numberMatch.index);
+        var suffix = fullText.substring(numberMatch.index + numberMatch[0].length);
+
+        $({ Counter: 0 }).animate({ Counter: number }, {
             duration: 4000,
             easing: 'swing',
             step: function (now) {
-                $(this).text(Math.ceil(now));
+                var displayNum = numberMatch[0].includes('.') ? now.toFixed(1) : Math.ceil(now);
+                $this.text(prefix + displayNum + suffix);
             }
         });
     });
+
 
 })(jQuery);
