@@ -936,20 +936,22 @@ ol {
 .leaderboard-table {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 15px;
-  overflow: hidden;
+  overflow: auto;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 .leaderboard-header {
   background: linear-gradient(135deg, var(--primary-color), #ff8a65);
-  padding: 1.5rem;
-  display: grid;
-  grid-template-columns: 80px 1fr 120px 120px;
-  gap: 1rem;
-  align-items: center;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+.table>:not(caption)>*>*{
+  background-color: transparent;
+  padding: 1.5rem;
+  color: white;
+  min-width: 200px;
 }
 
 .leaderboard-row {
@@ -977,22 +979,22 @@ ol {
   font-size: 1.2rem;
 }
 
-.leaderboard-row:nth-child(1) .rank-badge {
+table tbody tr:nth-child(1) .rank-badge {
   background: var(--gold);
   color: #000;
 }
 
-.leaderboard-row:nth-child(2) .rank-badge {
+table tbody tr:nth-child(2) .rank-badge {
   background: var(--silver);
   color: #000;
 }
 
-.leaderboard-row:nth-child(3) .rank-badge {
+table tbody tr:nth-child(3) .rank-badge {
   background: var(--bronze);
   color: #fff;
 }
 
-.leaderboard-row:nth-child(n+4) .rank-badge {
+table tbody tr:nth-child(n+4) .rank-badge {
   background: rgba(255, 255, 255, 0.2);
   color: var(--text-light);
 }

@@ -264,8 +264,7 @@
             </div>
             <div class="row">
                 <div class="container my-5">
-                    <ul class="leaderboard-tabs nav nav-tabs d-flex align-items-center justify-content-center"
-                        id="myTab" role="tablist">
+                    <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
                                 type="button" role="tab" aria-controls="home" aria-selected="true">Cấp độ</button>
@@ -282,156 +281,162 @@
                     </ul>
 
                     <div class="tab-content mt-3" id="myTabContent">
+                        <!-- Tab 1 -->
+                        <!-- Tab 1 -->
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="leaderboard-table">
-                                <div class="leaderboard-header">
-                                    <div>Hạng</div>
-                                    <div>Người chơi</div>
-                                    <div>Cấp độ</div>
-                                    <div class="hide-mobile">EXP</div>
-                                </div>
-
-                                <div class="leaderboard-row">
-                                    <div class="rank-badge">1</div>
-                                    <div class="player-info">
-                                        <div class="player-avatar">CJ</div>
-                                        <div class="player-name">Carl_Johnson</div>
-                                    </div>
-                                    <div class="stat-value">127</div>
-                                    <div class="stat-value hide-mobile">892,450</div>
-                                </div>
-
-                                <div class="leaderboard-row">
-                                    <div class="rank-badge">2</div>
-                                    <div class="player-info">
-                                        <div class="player-avatar">TB</div>
-                                        <div class="player-name">Tommy_Bercetti</div>
-                                    </div>
-                                    <div class="stat-value">119</div>
-                                    <div class="stat-value hide-mobile">756,320</div>
-                                </div>
-
-                                <div class="leaderboard-row">
-                                    <div class="rank-badge">3</div>
-                                    <div class="player-info">
-                                        <div class="player-avatar">NT</div>
-                                        <div class="player-name">Niko_Bellic</div>
-                                    </div>
-                                    <div class="stat-value">115</div>
-                                    <div class="stat-value hide-mobile">698,750</div>
-                                </div>
-
-                                <div class="leaderboard-row">
-                                    <div class="rank-badge">4</div>
-                                    <div class="player-info">
-                                        <div class="player-avatar">MD</div>
-                                        <div class="player-name">Michael_De_Santa</div>
-                                    </div>
-                                    <div class="stat-value">108</div>
-                                    <div class="stat-value hide-mobile">621,890</div>
-                                </div>
-
-                                <div class="leaderboard-row">
-                                    <div class="rank-badge">5</div>
-                                    <div class="player-info">
-                                        <div class="player-avatar">FT</div>
-                                        <div class="player-name">Franklin_Clinton</div>
-                                    </div>
-                                    <div class="stat-value">102</div>
-                                    <div class="stat-value hide-mobile">548,200</div>
-                                </div>
+                                <table class="table table-striped">
+                                    <thead class="leaderboard-header">
+                                        <tr>
+                                            <th scope="col">Hạng</th>
+                                            <th scope="col">Người chơi</th>
+                                            <th scope="col">Cấp độ</th>
+                                            <th scope="col" class="d-none d-md-table-cell">EXP</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="rank-badge">1</div>
+                                            </td>
+                                            <td>
+                                                <div class="player-info">
+                                                    <div class="player-avatar">CJ</div>
+                                                    <div class="player-name">Carl_Johnson</div>
+                                                </div>
+                                            </td>
+                                            <td>127</td>
+                                            <td class="d-none d-md-table-cell">892,450</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="rank-badge">2</div>
+                                            </td>
+                                            <td>
+                                                <div class="player-info">
+                                                    <div class="player-avatar">TB</div>
+                                                    <div class="player-name">Tommy_Bercetti</div>
+                                                </div>
+                                            </td>
+                                            <td>119</td>
+                                            <td class="d-none d-md-table-cell">756,320</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="rank-badge">3</div>
+                                            </td>
+                                            <td>
+                                                <div class="player-info">
+                                                    <div class="player-avatar">NT</div>
+                                                    <div class="player-name">Niko_Bellic</div>
+                                                </div>
+                                            </td>
+                                            <td>115</td>
+                                            <td class="d-none d-md-table-cell">698,750</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="rank-badge">4</div>
+                                            </td>
+                                            <td>
+                                                <div class="player-info">
+                                                    <div class="player-avatar">NT</div>
+                                                    <div class="player-name">Niko_Bellic</div>
+                                                </div>
+                                            </td>
+                                            <td>115</td>
+                                            <td class="d-none d-md-table-cell">698,750</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
+
+                        <!-- Tab 2 -->
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <div class="leaderboard-table">
-                                <div class="leaderboard-header">
-                                    <div>Hạng</div>
-                                    <div>Người chơi</div>
-                                    <div>Tiền mặt</div>
-                                    <div class="hide-mobile">Ngân hàng</div>
-                                </div>
-
-                                <div class="leaderboard-row">
-                                    <div class="rank-badge">1</div>
-                                    <div class="player-info">
-                                        <div class="player-avatar">TB</div>
-                                        <div class="player-name">Tommy_Bercetti</div>
-                                    </div>
-                                    <div class="stat-value">$2.5M</div>
-                                    <div class="stat-value hide-mobile">$15.2M</div>
-                                </div>
-
-                                <div class="leaderboard-row">
-                                    <div class="rank-badge">2</div>
-                                    <div class="player-info">
-                                        <div class="player-avatar">MD</div>
-                                        <div class="player-name">Michael_De_Santa</div>
-                                    </div>
-                                    <div class="stat-value">$1.8M</div>
-                                    <div class="stat-value hide-mobile">$12.7M</div>
-                                </div>
+                                <table class="table table-striped">
+                                    <thead class="leaderboard-header">
+                                        <tr>
+                                            <th scope="col">Hạng</th>
+                                            <th scope="col">Người chơi</th>
+                                            <th scope="col">Tiền mặt</th>
+                                            <th scope="col" class="d-none d-md-table-cell">Ngân hàng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="rank-badge">1</div>
+                                            </td>
+                                            <td>
+                                                <div class="player-info">
+                                                    <div class="player-avatar">TB</div>
+                                                    <div class="player-name">Tommy_Bercetti</div>
+                                                </div>
+                                            </td>
+                                            <td>$2.5M</td>
+                                            <td class="d-none d-md-table-cell">$15.2M</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="rank-badge">2</div>
+                                            </td>
+                                            <td>
+                                                <div class="player-info">
+                                                    <div class="player-avatar">MD</div>
+                                                    <div class="player-name">Michael_De_Santa</div>
+                                                </div>
+                                            </td>
+                                            <td>$1.8M</td>
+                                            <td class="d-none d-md-table-cell">$12.7M</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
+
+                        <!-- Tab 3 -->
                         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                             <div class="leaderboard-table">
-                                <div class="leaderboard-header">
-                                    <div>Hạng</div>
-                                    <div>Người chơi</div>
-                                    <div>Cấp độ</div>
-                                    <div class="hide-mobile">EXP</div>
-                                </div>
-
-                                <div class="leaderboard-row">
-                                    <div class="rank-badge">1</div>
-                                    <div class="player-info">
-                                        <div class="player-avatar">CJ</div>
-                                        <div class="player-name">Carl_Johnson</div>
-                                    </div>
-                                    <div class="stat-value">127</div>
-                                    <div class="stat-value hide-mobile">892,450</div>
-                                </div>
-
-                                <div class="leaderboard-row">
-                                    <div class="rank-badge">2</div>
-                                    <div class="player-info">
-                                        <div class="player-avatar">TB</div>
-                                        <div class="player-name">Tommy_Bercetti</div>
-                                    </div>
-                                    <div class="stat-value">119</div>
-                                    <div class="stat-value hide-mobile">756,320</div>
-                                </div>
-
-                                <div class="leaderboard-row">
-                                    <div class="rank-badge">3</div>
-                                    <div class="player-info">
-                                        <div class="player-avatar">NT</div>
-                                        <div class="player-name">Niko_Bellic</div>
-                                    </div>
-                                    <div class="stat-value">115</div>
-                                    <div class="stat-value hide-mobile">698,750</div>
-                                </div>
-
-                                <div class="leaderboard-row">
-                                    <div class="rank-badge">4</div>
-                                    <div class="player-info">
-                                        <div class="player-avatar">MD</div>
-                                        <div class="player-name">Michael_De_Santa</div>
-                                    </div>
-                                    <div class="stat-value">108</div>
-                                    <div class="stat-value hide-mobile">621,890</div>
-                                </div>
-
-                                <div class="leaderboard-row">
-                                    <div class="rank-badge">5</div>
-                                    <div class="player-info">
-                                        <div class="player-avatar">FT</div>
-                                        <div class="player-name">Franklin_Clinton</div>
-                                    </div>
-                                    <div class="stat-value">102</div>
-                                    <div class="stat-value hide-mobile">548,200</div>
-                                </div>
+                                <table class="table table-striped">
+                                    <thead class="leaderboard-header">
+                                        <tr>
+                                            <th scope="col">Hạng</th>
+                                            <th scope="col">Người chơi</th>
+                                            <th scope="col">Giờ chơi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="rank-badge">1</div>
+                                            </td>
+                                            <td>
+                                                <div class="player-info">
+                                                    <div class="player-avatar">TB</div>
+                                                    <div class="player-name">Tommy_Bercetti</div>
+                                                </div>
+                                            </td>
+                                            <td>150</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="rank-badge">2</div>
+                                            </td>
+                                            <td>
+                                                <div class="player-info">
+                                                    <div class="player-avatar">MD</div>
+                                                    <div class="player-name">Michael_De_Santa</div>
+                                                </div>
+                                            </td>
+                                            <td>150</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
