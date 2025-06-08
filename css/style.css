@@ -101,7 +101,7 @@ textarea:focus {
   outline: none;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
@@ -331,6 +331,30 @@ ol {
   background: transparent;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 9;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.header.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(10, 20, 40, 0.98);
+  /* dark blue, nearly opaque */
+  box-shadow: 0 2px 16px 0 rgba(0, 191, 231, 0.10);
+  border-bottom: 1.5px solid #00bfe7;
+  animation: stickyFadeIn 0.3s;
+}
+
+@keyframes stickyFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .header__logo {
@@ -342,8 +366,11 @@ ol {
 }
 
 .header__nav__option {
+  display: flex;
+  justify-content: space-between;
   text-align: right;
   padding: 28px 0px;
+  align-items: center;
 }
 
 .header__nav__menu {
@@ -441,7 +468,6 @@ ol {
 .header__nav__social {
   display: inline-block;
   position: relative;
-  padding-left: 50px;
 }
 
 .header__nav__social:before {
@@ -466,6 +492,51 @@ ol {
 
 .slicknav_menu {
   display: none;
+}
+
+.header__nav__social a.btn {
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: 8px;
+  padding: 10px 28px;
+  font-size: 1rem;
+  box-shadow: 0 4px 24px #00bfe770, 0 1.5px 0 #fff1;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+  position: relative;
+  z-index: 1;
+}
+
+.header__nav__social a.btn.btn-primary {
+  background: linear-gradient(90deg, #00bfe7 60%, #0077b6 100%);
+  color: #fff;
+  border: none;
+}
+
+.header__nav__social a.btn.btn-primary:hover {
+  background: linear-gradient(90deg, #0077b6 60%, #00bfe7 100%);
+  color: #fff;
+  box-shadow: 0 8px 32px #00bfe7cc, 0 2px 0 #fff2;
+  transform: translateY(-2px) scale(1.04);
+}
+
+.header__nav__social a.btn.btn-danger {
+  background: linear-gradient(90deg, #ff416c 60%, #ff4b2b 100%);
+  color: #fff;
+  border: none;
+}
+
+.header__nav__social a.btn.btn-danger:hover {
+  background: linear-gradient(90deg, #ff4b2b 60%, #ff416c 100%);
+  color: #fff;
+  box-shadow: 0 8px 32px #ff4b2bcc, 0 2px 0 #fff2;
+  transform: translateY(-2px) scale(1.04);
+}
+
+@media (max-width: 991px) {
+  .header__nav__social a.btn {
+    padding: 8px 18px;
+    font-size: 0.95rem;
+  }
 }
 
 /*---------------------
@@ -909,7 +980,8 @@ ol {
   background-color: transparent;
 }
 
-.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover{
+.nav-tabs .nav-link:focus,
+.nav-tabs .nav-link:hover {
   color: var(--primary-color);
   border-bottom-color: var(--primary-color);
   background-color: transparent;
@@ -948,7 +1020,7 @@ ol {
   letter-spacing: 1px;
 }
 
-.table>:not(caption)>*>*{
+.table>:not(caption)>*>* {
   background-color: transparent;
   padding: 1.5rem;
   color: white;
@@ -1176,7 +1248,8 @@ table tbody tr:nth-child(n+4) .rank-badge {
   line-height: 32px;
 }
 
-.nav-link:focus, .nav-link:hover{
+.nav-link:focus,
+.nav-link:hover {
   color: #adadad;
 
 }
@@ -1309,7 +1382,7 @@ table tbody tr:nth-child(n+4) .rank-badge {
 }
 
 .about__text .services__item .services__item__icon:after {
-  border-color: #281A3E;
+  border-color: #281a3e;
 }
 
 .about__text__desc {
@@ -1350,7 +1423,7 @@ table tbody tr:nth-child(n+4) .rank-badge {
 
 .testimonial__text {
   padding: 30px 40px 25px 30px;
-  border: 1px solid #3D3A64;
+  border: 1px solid #3d3a64;
   margin-bottom: 25px;
   position: relative;
   z-index: 9;
@@ -2281,13 +2354,6 @@ table tbody tr:nth-child(n+4) .rank-badge {
     background: #222222;
   }
 
-  .slicknav_btn {
-    position: absolute;
-    right: 10px;
-    top: 26px;
-    background: #00bfe7;
-  }
-
   .header .container {
     position: relative;
   }
@@ -2408,7 +2474,7 @@ table tbody tr:nth-child(n+4) .rank-badge {
     position: absolute;
     right: 10px;
     top: 26px;
-    background: #00bfe7;
+    background: #4c4c4c;
   }
 
   .header .container {
@@ -2518,4 +2584,15 @@ table tbody tr:nth-child(n+4) .rank-badge {
   .blog__details__quote {
     padding: 30px 40px 35px 35px;
   }
+}
+
+.header__nav__menu ul li.active a,
+.header__nav__menu ul li a.active,
+.header__nav__menu ul li a:focus {
+  color: #00bfe7 !important;
+}
+.header__nav__menu ul li.active a:after,
+.header__nav__menu ul li a.active:after {
+  transform: scale(1);
+  background: #00bfe7;
 }

@@ -188,5 +188,32 @@
         });
     });
 
+    // Sticky header on scroll
+    window.addEventListener('scroll', function() {
+        var header = document.querySelector('.header');
+        if(window.scrollY > 30) {
+            header.classList.add('sticky');
+        } else {
+            header.classList.remove('sticky');
+        }
+    });
+
+    // Auto set active menu item based on URL only (không active theo section/hash)
+    function setActiveMenu() {
+        var path = window.location.pathname.split("/").pop();
+        var menuLinks = document.querySelectorAll('.header__nav__menu ul li a');
+        menuLinks.forEach(function(link) {
+            link.classList.remove('active');
+            var href = link.getAttribute('href');
+            // Trang chủ
+            if ((path === '' || path === 'index.html') && (href === './' || href === '/' || href.includes('index.html'))) {
+                link.classList.add('active');
+            } else if (path && href && (href === path || href.endsWith('/' + path))) {
+                link.classList.add('active');
+            }
+        });
+    }
+    window.addEventListener('DOMContentLoaded', setActiveMenu);
+
 
 })(jQuery);

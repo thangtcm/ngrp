@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SA-MP Server - Authentication</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00bfff; /* blue/cyan */
+            --secondary-color: #00e6e6; /* cyan */
+            --bg-dark: #0a0a1a;
+            --bg-card: #131a26;
+            --text-light: #eaf6fb;
+            --text-muted: #6cb2d6;
+            --border-color: #1e3557;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: 
+                linear-gradient(135deg, rgba(10, 10, 10, 0.9) 0%, rgba(26, 26, 26, 0.9) 50%, rgba(15, 15, 15, 0.9) 100%),
+                url('./img/auth/background-auth.jpg') center/cover fixed;
+            color: var(--text-light);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background elements */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 191, 255, 0.12) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 230, 230, 0.10) 0%, transparent 70%);
+            animation: rotate 25s linear infinite reverse;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Particle effects */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(135deg, #00bfff 60%, #00e6e6 100%);
+            box-shadow: 0 0 8px #00e6e6, 0 0 2px #00bfff;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            50% { transform: translateY(-100px) rotate(180deg); opacity: 1; }
+        }
+
+        .container-fluid {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: rgba(19, 26, 38, 0.96);
+            border: 1.5px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 450px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 20px 40px rgba(0, 191, 255, 0.10),
+                0 0 0 1px rgba(0, 230, 230, 0.08),
+                inset 0 1px 0 rgba(0, 191, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00bfff, #00e6e6, transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #00bfff, #00e6e6 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px #00e6e6a0, 0 0 8px #00bfff80;
+        }
+        .logo img {
+            filter: drop-shadow(0 0 8px #00e6e6cc);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .form-control {
+            background: rgba(0, 191, 255, 0.04);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-light);
+            padding: 15px 20px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .form-control:focus {
+            background: rgba(0, 191, 255, 0.10);
+            border-color: #00e6e6;
+            box-shadow: 0 0 20px #00e6e6a0;
+            color: var(--text-light);
+        }
+
+        .form-control::placeholder {
+            color: #6cb2d6;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group-text {
+            color: #00bfff;
+            border: 1.5px solid var(--border-color);
+            background: rgba(0, 191, 255, 0.03);
+            border-right: none;
+            border-radius: 12px 0 0 12px;
+        }
+
+        .input-group .form-control {
+            border-left: none;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #00bfff, #00e6e6 80%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 24px #00e6e650;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 10px 30px #00e6e6a0;
+            background: linear-gradient(90deg, #00e6e6, #00bfff 80%);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #00e6e6a0, transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-outline-secondary {
+            border: 1.5px solid var(--border-color);
+            color: var(--text-light);
+            border-radius: 12px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-secondary:hover {
+            background: #00bfff;
+            border-color: #00e6e6;
+            color: #fff;
+        }
+
+        .form-check-input {
+            background-color: rgba(0, 191, 255, 0.10);
+            border-color: var(--border-color);
+        }
+
+        .form-check-label {
+            color: var(--text-muted);
+        }
+
+        .auth-links {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .auth-links a {
+            color: #00bfff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .auth-links a:hover {
+            color: #00e6e6;
+            text-shadow: 0 0 10px #00e6e6a0;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #1e3557;
+        }
+
+        .divider span {
+            background: var(--bg-card);
+            color: #6cb2d6;
+            padding: 0 20px;
+            font-size: 0.9rem;
+        }
+
+        .page-hidden {
+            display: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .server-info {
+            background: rgba(0, 191, 255, 0.08);
+            border: 1.5px solid #00e6e6;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .server-status{
+            color: #00e6e6;
+            text-shadow: 0 0 8px #00bfff80;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .auth-card {
+                margin: 10px;
+                padding: 30px 25px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="container-fluid">
+        <!-- Login Form -->
+        <div class="auth-card fade-in" id="loginForm">
+            <div class="logo-section">
+                <div class="logo">
+                    <img src="./img/logo.png" alt=""> SA-MP
+                </div>
+                <div class="subtitle">Los Santos Roleplay</div>
+            </div>
+
+            <div class="server-info">
+                <div class="server-status">
+                    <i class="fas fa-circle text-primary"></i> Server Online: 247/500
+                </div>
+            </div>
+
+            <form>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-user"></i>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Tên đăng nhập" required>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                    <input type="password" class="form-control" placeholder="Mật khẩu" required>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">
+                            Ghi nhớ đăng nhập
+                        </label>
+                    </div>
+                    <a href="#" onclick="showForgotPassword()" class="text-decoration-none">
+                        Quên mật khẩu?
+                    </a>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mb-3">
+                    <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>hoặc</span>
+            </div>
+
+            <div class="auth-links">
+                <p class="mb-0">Chưa có tài khoản? 
+                    <a href="#" onclick="showRegister()">Đăng ký ngay</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Register Form -->
+        <div class="auth-card page-hidden" id="registerForm">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-user-plus"></i> Đăng ký
+                </div>
+                <div class="subtitle">Tham gia Los Santos</div>
+            </div>
+
+            <form>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-user"></i>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Tên đăng nhập" required>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                    <input type="email" class="form-control" placeholder="Email" required>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                    <input type="password" class="form-control" placeholder="Mật khẩu" required>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                    <input type="password" class="form-control" placeholder="Xác nhận mật khẩu" required>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-calendar"></i>
+                    </span>
+                    <input type="date" class="form-control" placeholder="Ngày sinh" required>
+                </div>
+
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                    <label class="form-check-label" for="agreeTerms">
+                        Tôi đồng ý với <a href="#" class="text-decoration-none">Điều khoản dịch vụ</a> và <a href="#" class="text-decoration-none">Chính sách bảo mật</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mb-3">
+                    <i class="fas fa-user-plus me-2"></i>Tạo tài khoản
+                </button>
+
+                <button type="button" class="btn btn-outline-secondary w-100" onclick="showLogin()">
+                    <i class="fas fa-arrow-left me-2"></i>Quay lại đăng nhập
+                </button>
+            </form>
+        </div>
+
+        <!-- Forgot Password Form -->
+        <div class="auth-card page-hidden" id="forgotForm">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-key"></i> Khôi phục
+                </div>
+                <div class="subtitle">Quên mật khẩu</div>
+            </div>
+
+            <div class="alert alert-info" style="background: rgba(0, 123, 255, 0.1); border: 1px solid rgba(0, 123, 255, 0.3); color: #87ceeb;">
+                <i class="fas fa-info-circle me-2"></i>
+                Nhập email của bạn để nhận liên kết đặt lại mật khẩu
+            </div>
+
+            <form>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                    <input type="email" class="form-control" placeholder="Địa chỉ email" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mb-3">
+                    <i class="fas fa-paper-plane me-2"></i>Gửi liên kết khôi phục
+                </button>
+
+                <button type="button" class="btn btn-outline-secondary w-100" onclick="showLogin()">
+                    <i class="fas fa-arrow-left me-2"></i>Quay lại đăng nhập
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Form switching functions
+        function showRegister() {
+            document.getElementById('loginForm').classList.add('page-hidden');
+            document.getElementById('registerForm').classList.remove('page-hidden');
+            document.getElementById('registerForm').classList.add('fade-in');
+        }
+
+        function showLogin() {
+            document.getElementById('registerForm').classList.add('page-hidden');
+            document.getElementById('forgotForm').classList.add('page-hidden');
+            document.getElementById('loginForm').classList.remove('page-hidden');
+            document.getElementById('loginForm').classList.add('fade-in');
+        }
+
+        function showForgotPassword() {
+            document.getElementById('loginForm').classList.add('page-hidden');
+            document.getElementById('forgotForm').classList.remove('page-hidden');
+            document.getElementById('forgotForm').classList.add('fade-in');
+        }
+
+        // Form submissions
+        document.getElementById('loginForm').querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your login logic here
+            alert('Đăng nhập thành công! Chào mừng đến với Los Santos!');
+        });
+
+        document.getElementById('registerForm').querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your registration logic here
+            alert('Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản.');
+        });
+
+        document.getElementById('forgotForm').querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your forgot password logic here
+            alert('Liên kết khôi phục mật khẩu đã được gửi đến email của bạn!');
+        });
+
+        // Initialize particles on page load
+        window.addEventListener('load', function() {
+            createParticles();
+        });
+
+        // Add some interactive effects
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
